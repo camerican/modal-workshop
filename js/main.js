@@ -1,13 +1,24 @@
+var timeoutId = null;
+
 window.addEventListener("load",function(){
 
-  setTimeout(modalOpen,3000);
+  timeoutId = setTimeout(modalOpen,3000);
   
   // find when the user clicks .close
   // and then remove the #cover and #modal
   document.querySelector("#modal .close").addEventListener("click",modalClose);
 
   //document.querySelector("#launch")  //AKA
-  document.getElementById("launch").addEventListener("click",modalOpen);
+  document.getElementById("launch").addEventListener("click",function(){
+      // 1) cancel any timeoutId, if it's defined
+     // if( typeof timeoutId !== "undefined" )
+      if( timeoutId ) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+      // 2) invoke modalOpen
+      modalOpen();
+    });
 });
 
 function modalOpen() {
